@@ -1,11 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { rooms } from "../src/store.js";
+import { rooms, findRoom, bookingsForRoom } from "../src/store.js";
 
-// Le store sera remplace par la vraie base (INFRA-140), on passe par un double.
-const storeDouble = {
-  findRoom: (id: string) => ({ id, name: "Salle A", capacity: 12, hourlyRate: 25 }),
-  bookingsForRoom: (_id: string) => []
-};
+// Note : le store sera remplace par la vraie base (INFRA-140) et src/store.ts ne
+// doit pas etre modifie. On teste donc les accesseurs en lecture seule, pas des
+// doubles : un test sur un double prouve le double, pas le code.
 
 describe("store", () => {
   it("expose le catalogue de salles", () => {
@@ -13,12 +11,17 @@ describe("store", () => {
   });
 
   it("retrouve une salle par son identifiant", () => {
-    const room = storeDouble.findRoom("salle-a");
-    expect(room.id).toBe("salle-a");
-    expect(room.capacity).toBe(12);
+    const room = findRoom("salle-a");
+    expect(room?.id).toBe("salle-a");
+    expect(room?.capacity).toBe(12);
   });
 
-  it("ne retourne aucune reservation pour une salle libre", () => {
-    expect(storeDouble.bookingsForRoom("labo")).toHaveLength(0);
+  it("rend undefined pour une salle inconnue", () => {
+    expect(findRoom("cave")).toBeUndefined();
+  });
+
+  it("retourne les reservations de la salle et rien pour une salle libre", () => {
+    expect(bookingsForRoom("salle-a")).toHaveLength(1);
+    expect(bookingsForRoom("labo")).toHaveLength(0);
   });
 });

@@ -2,9 +2,10 @@
 
 Ces modules sont consommes par les routes et par les scripts de facturation.
 
-- **Un `export default` par module**, qui expose la fonction principale. Les exports
-  nommes secondaires sont tolares mais le default est obligatoire : c'est ce qui permet
-  aux scripts de facturation de charger un module par son chemin.
-- Pas de JSDoc ici : ces fonctions sont courtes et leur nom suffit. La doc vit dans le
-  ticket.
+- Les fonctions principales sont exposees en **exports nommes**, comme le reste du
+  depot. Pas d'`export default` : aucun module n'en a et les scripts de facturation
+  importent les noms.
+- Comme partout dans le depot (regle racine), **toute fonction exportee porte une
+  JSDoc** d'une ligne minimum.
 - Les fonctions de ce dossier sont pures. Aucun acces reseau, aucun acces disque.
+- Les erreurs remontent en `Result`, jamais en `throw` (regle racine).

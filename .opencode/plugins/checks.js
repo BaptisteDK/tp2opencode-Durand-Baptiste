@@ -2,6 +2,8 @@
 // typecheck + lint + tests et on colle la sortie dans le resultat de l'outil,
 // pour que l'agent voie le rouge sans qu'on ait a le lui demander.
 //
+// Branchement : ce fichier est charge automatiquement car il vit dans
+// .opencode/plugins/ (au pluriel) via l'evenement "tool.execute.after".
 // (INFRA-231 : le script scripts/checks.sh ne doit pas interrompre l'agent,
 // il l'avertit, c'est a lui de corriger.)
 export const ChecksPlugin = async ({ $, directory }) => {

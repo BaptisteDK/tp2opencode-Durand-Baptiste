@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Checks post-ecriture. Branche dans opencode.json (experimental.hook.file_edited).
+# Checks post-ecriture. Branche via .opencode/plugins/checks.js (evenement
+# "tool.execute.after") : le plugin appelle ce script, il n'y a aucune cle de
+# branchement dans opencode.json.
 # Objectif : l'agent voit le resultat de ses checks sans qu'on ait a le lui demander.
 set +e
 status=0
